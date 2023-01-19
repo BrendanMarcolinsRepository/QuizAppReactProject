@@ -4,7 +4,7 @@ import Home from "./components/HomePage"
 import Quiz from "./components/Quiz"
 import './App.css';
 
-function App() {
+function App(props) {
   
 
 
@@ -13,7 +13,7 @@ function App() {
         <div>
             <Switch>
                 <Route exact path="/">
-                    <Home />
+                    <Home store = {props.store}/>
                 </Route>
                 <Route exact path="/quiz">
                     <Quiz />

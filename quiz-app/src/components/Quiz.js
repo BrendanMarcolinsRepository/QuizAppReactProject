@@ -1,12 +1,15 @@
 import React, {useContext} from "react"
-import { nanoid } from "nanoid"
+
 import { Puff } from 'react-loader-spinner'
-import {Context} from "../context/Context"
+
+
+import {useSelector} from "react-redux"
 
 import useFetch from "../hooks/useFetch"
 function Quiz(){
 
-    const {questionNumber} = useContext(Context);
+
+    const count = useSelector(state => state);
     
     const  [ data,category, loading, error ,  getQuizData] = useFetch()
 
@@ -164,7 +167,7 @@ function Quiz(){
                                 <button 
                                     onClick = {reset}>Play Again
                                 </button>
-                                <h4>You got {correctAnswers}/{questionNumber} correct</h4> 
+                                <h4>You got {correctAnswers}/{count.questionNumber} correct</h4> 
                             </div>
                         :
                             <div>

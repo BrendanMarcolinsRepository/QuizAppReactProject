@@ -1,13 +1,14 @@
-import questionNumberReducer from "./QuestionNumberRedux"
-import {createStore,combineReducers} from "redux"
+import gameSetupReducer from "./GameStateRedux"
+import {createStore,combineReducers, applyMiddleware} from "redux"
+import thunk from "redux-thunk"
 
 
 
 const rootReducer = combineReducers({
-    questionNumber: questionNumberReducer,
+    gameSetupInformation: gameSetupReducer,
     
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 store.subscribe(() => console.log(store.getState()))
 export default store

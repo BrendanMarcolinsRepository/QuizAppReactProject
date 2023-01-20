@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, {useContext, useRef} from "react"
 
 import { Puff } from 'react-loader-spinner'
 
@@ -9,7 +9,7 @@ import useFetch from "../hooks/useFetch"
 function Quiz(){
 
 
-    const count = useSelector(state => state);
+    const setUpNumbers = useSelector(state => state)
     
     const  [ data,category, loading, error ,  getQuizData] = useFetch()
 
@@ -20,6 +20,7 @@ function Quiz(){
     const [clicked,setClicked] = React.useState([5,5,5,5,5])
     
     const [correctAnswers,setCorrectAnswers] = React.useState(0)
+
 
     
     
@@ -52,22 +53,9 @@ function Quiz(){
                 
             }
         }
-        
-        
-        
-        
-        setCorrectAnswers(correctAnswersCounter)
-        
-        console.log("working 2")
-        
-        console.log("correct amount of answers : " + correctAnswersCounter)
-        
-        
+        setCorrectAnswers(correctAnswersCounter)      
     }
     
-
-    
-
     function reset(){
          getQuizData()
          setClicked([5,5,5,5,5])
@@ -167,7 +155,7 @@ function Quiz(){
                                 <button 
                                     onClick = {reset}>Play Again
                                 </button>
-                                <h4>You got {correctAnswers}/{count.questionNumber} correct</h4> 
+                                <h4>You got {correctAnswers}/{ setUpNumbers.gameSetupInformation.questionNumbers} correct</h4> 
                             </div>
                         :
                             <div>

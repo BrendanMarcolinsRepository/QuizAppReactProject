@@ -1,23 +1,23 @@
 import React, {useState, useEffect, useContext} from "react"
 import { nanoid } from "nanoid"
-import {updateQuestionNumber} from "../redux/QuestionNumberRedux"
+import {updateQuestionNumber} from "../redux/GameStateRedux"
 import {useDispatch, useSelector} from "react-redux"
 
 function useFetch() {
 
     
-    const count = useSelector(state => state)
+    const gameSetup = useSelector(state => state)
     const [quizData, setQuizData] = useState([])
     const [category, setCategory] = useState("")
     const [loading, setloading] = useState(true);
     const [error, seterror] = useState("");
 
 
-    console.log("category number here ==== " +  count.questionNumber)
+    console.log("category number here ==== " +  gameSetup.gameSetupInformation.difficulty)
     
     const getQuizData = async() => {
         
-        const reciever = await fetch(`https://opentdb.com/api.php?amount=${count.questionNumber}&category=13&difficulty=medium&type=multiple`)
+        const reciever = await fetch(`https://opentdb.com/api.php?amount=${gameSetup.gameSetupInformation.questionNumbers}&category=${gameSetup.gameSetupInformation.cateogoryNumbers}&difficulty=${gameSetup.gameSetupInformation.difficulty}&type=multiple`)
     
         const result = await reciever.json()
 

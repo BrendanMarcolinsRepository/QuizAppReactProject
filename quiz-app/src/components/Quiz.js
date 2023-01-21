@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from "react"
+import React, {useContext, useEffect, useRef} from "react"
 
 import { Puff } from 'react-loader-spinner'
 
@@ -15,25 +15,36 @@ function Quiz(){
 
     const [gameState,setGameState] = React.useState(false)
     
-    const [answer,setAnswer] = React.useState(["","","","",""])
-    
-    const [clicked,setClicked] = React.useState([5,5,5,5,5])
-    
-    const [correctAnswers,setCorrectAnswers] = React.useState(0)
+    const [answer,setAnswer] = React.useState([])
 
+    const [correct,setCorrect] = React.useState(0)
+
+    const [clicked,setClicked] = React.useState([])
 
     
     
     
-    const styles= (index, buttonPosition) => {
     
-        console.log("working")
     
-        if(clicked[index] === buttonPosition){
-            return {backgroundColor :"#add8e6"}
-        }else{
-            return {backgroundColor :"#ffffff"}
-        }
+    
+    
+    const styles= (quesitonPosition, buttonPosition) => {
+    
+        let color = {backgroundColor :"#ffffff"};
+
+        answer.forEach(m => {
+            if(m.buttonPosition === buttonPosition && m.quesitonPosition === quesitonPosition){
+                console.log("got it")
+                color = {backgroundColor :"#add8e6"}
+            }
+
+        })
+
+        
+
+        return color;
+
+        
     }
     
     
@@ -41,25 +52,39 @@ function Quiz(){
         setGameState(true)
         
         let correctAnswersCounter = 0
+
+        data.filter(d => {
+
+            answer.filter((f) => {
+
+                if(f.userAnswer !== d.correctAnswer){
+                    document.getElementById(f.userAnswer).style.backgroundColor = "red";
+                }else{
+                    correctAnswersCounter++;
+                    console.log("working her =========" + f.userAnswer + "  something " + d.correctAnswer)
+                    document.getElementById(d.correctAnswer).style.backgroundColor = "green";
+                }
+            })
+        })
         
-        for(let i = 0; i < answer.length; i++){
-            if(answer[i] === data[i].correctAnswer){
-                correctAnswersCounter++;
-                console.log("right and " + answer[i])
-                document.getElementById(answer[i]).style.backgroundColor = "green";
-            }else{
-                console.log("right and " + answer[i])
-                document.getElementById(answer[i]).style.backgroundColor = "red";
-                
-            }
+        console.log("matched " + correctAnswersCounter);
+        /*
+        if(correctAnswersCounter == 0){
+            
+            //document.getElementById(answer[i]).style.backgroundColor = "green";
+        }else{
+            
+            //document.getElementById(answer[i]).style.backgroundColor = "red";
         }
-        setCorrectAnswers(correctAnswersCounter)      
+        */
+        
+        setCorrect(correctAnswersCounter)      
     }
     
     function reset(){
          getQuizData()
-         setClicked([5,5,5,5,5])
-         setAnswer(["","","","",""])
+         setClicked([])
+         setAnswer([])
          setGameState(false)
          
     }
@@ -70,14 +95,12 @@ function Quiz(){
         console.log("BUTTON HERE" + buttonPosition)
         
         const updateAnswerState = answer.map((a, i) => {
-            
             if(index === i){
                 console.log("working")
                 return buttonValue
             }else{
                 return a
-            }
-                
+            } 
         })
         
         const updateClickState = clicked.map((a, i) => {
@@ -92,18 +115,53 @@ function Quiz(){
         
         setAnswer(updateAnswerState)
         setClicked(updateClickState)
-        console.log(clicked)
-        console.log(answer)
-        
-        
+     
+    }
+
+    function saveAnwers(userAnswer, buttonPosition, quesitonPosition){
+
+        console.log("working save user answers " + userAnswer)
+
+        if(!answer.length){
+            console.log("working")
+            const ar = [...answer];
+            ar.push({quesitonPosition: quesitonPosition, buttonPosition: buttonPosition, userAnswer : userAnswer});
+            console.log("working ==== " + ar[0].userAnswer)
+            setAnswer(ar);
+            console.log("updated answre array after picing " +  answer);
+
+           
+            
+
+        }else{
+
+            console.log("working 1 index " + userAnswer)
+
+            const checkIfClicked = answer.filter((answerObject) => answerObject.quesitonPosition !== quesitonPosition );
+
+            if(checkIfClicked === null){
+                const newArrayAnswer = [...answer];
+                newArrayAnswer.push({quesitonPosition: quesitonPosition, buttonPosition: buttonPosition, userAnswer : userAnswer});
+                setAnswer(newArrayAnswer);
+            }else{
+                checkIfClicked.push({quesitonPosition: quesitonPosition, buttonPosition: buttonPosition, userAnswer : userAnswer});
+                setAnswer(checkIfClicked);
+            }
+
+            console.log("updated answre array after picing " +  answer[0].userAnswer);
+
+        }
+
+    
+
         
     }
 
     
+    
     const element = data.map((data, index) => (
         <div>
            
-
             <h3>{data.question}</h3>
             {
                 data.answers.map((ans,answersIndex) => (
@@ -111,7 +169,7 @@ function Quiz(){
                     <button
                         id = {ans}
                         className = "answerButtons"
-                        onClick = {() => userAnswer(index, data.answers[answersIndex], answersIndex)}
+                        onClick = {() => saveAnwers(data.answers[answersIndex], answersIndex, index)}
                         style={styles(index,answersIndex)}
                         value = {ans[answersIndex]}
                     >
@@ -119,6 +177,8 @@ function Quiz(){
                     </button>
                     
                 ))
+
+                
             }
             <br/><hr/>
         </div>
@@ -155,7 +215,7 @@ function Quiz(){
                                 <button 
                                     onClick = {reset}>Play Again
                                 </button>
-                                <h4>You got {correctAnswers}/{ setUpNumbers.gameSetupInformation.questionNumbers} correct</h4> 
+                                <h4>You got {correct}/{ setUpNumbers.gameSetupInformation.questionNumbers} correct</h4> 
                             </div>
                         :
                             <div>

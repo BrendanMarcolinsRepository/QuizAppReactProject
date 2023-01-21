@@ -1,7 +1,7 @@
 
-import React, {useContext, useEffect, useRef} from "react"
+import React, { useEffect, useRef} from "react"
 import {Link} from "react-router-dom"
-import {Context} from "../context/Context"
+//import {Context} from "../context/Context"
 import {updateQuestionNumber,updateCategoryNumber,updateGameDifficulty} from "../redux/GameStateRedux"
 import {useDispatch, useSelector} from "react-redux"
 
@@ -12,6 +12,8 @@ function HomePage(){
     const dispatch = useDispatch()
     const gameSetup = useSelector(state => state)
     const dropDownElement = useRef(null);
+
+    
 
     const focusDropDown = () => {
         dropDownElement.current.focus();

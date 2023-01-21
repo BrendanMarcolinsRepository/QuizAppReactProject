@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react"
+import React, {useState, useEffect, useContext, useRef} from "react"
 import { nanoid } from "nanoid"
 import {updateQuestionNumber} from "../redux/GameStateRedux"
 import {useDispatch, useSelector} from "react-redux"
@@ -11,6 +11,10 @@ function useFetch() {
     const [category, setCategory] = useState("")
     const [loading, setloading] = useState(true);
     const [error, seterror] = useState("");
+    const renderAfterCalled = useRef(false);
+
+   
+    
 
 
     console.log("category number here ==== " +  gameSetup.gameSetupInformation.difficulty)
@@ -58,10 +62,13 @@ function useFetch() {
     
     useEffect(() => {
         
-        getQuizData()
+        if(!renderAfterCalled.current){
+            getQuizData()
+        }
+        renderAfterCalled.current = true;
        
         
-    },[0]) 
+    },[]) 
 
     return [ quizData,category, loading, error ,  getQuizData];
 }

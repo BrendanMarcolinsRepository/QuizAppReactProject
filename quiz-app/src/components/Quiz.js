@@ -6,6 +6,7 @@ import { Puff } from 'react-loader-spinner'
 import {useSelector} from "react-redux"
 
 import useFetch from "../hooks/useFetch"
+import Button from "./Button"
 function Quiz(){
 
 
@@ -21,122 +22,73 @@ function Quiz(){
 
     const [clicked,setClicked] = React.useState([])
 
-    
-    
-    
-    
-    
-    
-    
     const styles= (quesitonPosition, buttonPosition) => {
     
         let color = {backgroundColor :"#ffffff"};
 
-        answer.forEach(m => {
-            if(m.buttonPosition === buttonPosition && m.quesitonPosition === quesitonPosition){
-                console.log("got it")
-                color = {backgroundColor :"#add8e6"}
-            }
-
-        })
-
-        
-
-        return color;
-
-        
-    }
+        if(!gameState){
+            answer.forEach(m => {
+                if(m.buttonPosition === buttonPosition && m.quesitonPosition === quesitonPosition){
+                    color = {backgroundColor :"#add8e6"}
+                }
     
+            })
+        }else{
+
+            const currnetPos = answer.filter(a => a.quesitonPosition === quesitonPosition)
+            const found = data.filter(d => currnetPos.some(a => a.userAnswer === d.correctAnswer))    
+            answer.forEach((f) => {
+
+                if(f.buttonPosition === buttonPosition && f.quesitonPosition === quesitonPosition){
+                    if(found.length){
+                        color = {backgroundColor :"#00FF00"}
+                        
+                    }else{
+                        color = {backgroundColor :"#FF0000"}
+                    }
+                }
+            })
+        }
+        return color;
+    }
+
     
     function checkAnswers(){
         setGameState(true)
         
         let correctAnswersCounter = 0
+        
 
         data.filter(d => {
-
             answer.filter((f) => {
 
-                if(f.userAnswer !== d.correctAnswer){
-                    document.getElementById(f.userAnswer).style.backgroundColor = "red";
-                }else{
+                if(f.userAnswer === d.correctAnswer){
                     correctAnswersCounter++;
-                    console.log("working her =========" + f.userAnswer + "  something " + d.correctAnswer)
-                    document.getElementById(d.correctAnswer).style.backgroundColor = "green";
+                    
                 }
             })
-        })
-        
-        console.log("matched " + correctAnswersCounter);
-        /*
-        if(correctAnswersCounter == 0){
-            
-            //document.getElementById(answer[i]).style.backgroundColor = "green";
-        }else{
-            
-            //document.getElementById(answer[i]).style.backgroundColor = "red";
-        }
-        */
-        
+        })    
         setCorrect(correctAnswersCounter)      
     }
     
     function reset(){
+        setGameState(false)
          getQuizData()
          setClicked([])
          setAnswer([])
-         setGameState(false)
-         
     }
     
-    
-    function userAnswer(index,buttonValue, buttonPosition){
 
-        console.log("BUTTON HERE" + buttonPosition)
-        
-        const updateAnswerState = answer.map((a, i) => {
-            if(index === i){
-                console.log("working")
-                return buttonValue
-            }else{
-                return a
-            } 
-        })
-        
-        const updateClickState = clicked.map((a, i) => {
-            if(index === i){
-                console.log("working")
-                return buttonPosition
-            }else{
-                return a
-            }
-                
-        })
-        
-        setAnswer(updateAnswerState)
-        setClicked(updateClickState)
-     
-    }
 
     function saveAnwers(userAnswer, buttonPosition, quesitonPosition){
 
-        console.log("working save user answers " + userAnswer)
-
         if(!answer.length){
-            console.log("working")
             const ar = [...answer];
             ar.push({quesitonPosition: quesitonPosition, buttonPosition: buttonPosition, userAnswer : userAnswer});
-            console.log("working ==== " + ar[0].userAnswer)
             setAnswer(ar);
-            console.log("updated answre array after picing " +  answer);
-
-           
             
 
         }else{
-
-            console.log("working 1 index " + userAnswer)
-
             const checkIfClicked = answer.filter((answerObject) => answerObject.quesitonPosition !== quesitonPosition );
 
             if(checkIfClicked === null){
@@ -147,35 +99,27 @@ function Quiz(){
                 checkIfClicked.push({quesitonPosition: quesitonPosition, buttonPosition: buttonPosition, userAnswer : userAnswer});
                 setAnswer(checkIfClicked);
             }
-
-            console.log("updated answre array after picing " +  answer[0].userAnswer);
-
         }
-
-    
-
-        
     }
 
-    
-    
+
     const element = data.map((data, index) => (
-        <div>
+        <div key = {index}>
            
             <h3>{data.question}</h3>
             {
                 data.answers.map((ans,answersIndex) => (
                     
-                    <button
+                    <Button
+                        hey = {answersIndex}
                         id = {ans}
-                        className = "answerButtons"
-                        onClick = {() => saveAnwers(data.answers[answersIndex], answersIndex, index)}
-                        style={styles(index,answersIndex)}
-                        value = {ans[answersIndex]}
-                    >
-                        {data.answers[answersIndex]} 
-                    </button>
-                    
+                        saveAnwers = {() => saveAnwers(data.answers[answersIndex], answersIndex, index)}
+                        styles={styles(index,answersIndex)}
+                        values = {ans[answersIndex]}
+                        content = {data.answers[answersIndex]} 
+
+
+                    />
                 ))
 
                 

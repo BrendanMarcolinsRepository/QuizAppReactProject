@@ -6,6 +6,7 @@ import {updateQuestionNumber,updateCategoryNumber,updateGameDifficulty} from "..
 import {useDispatch, useSelector} from "react-redux"
 
 
+
 function HomePage(){
 
     
@@ -51,12 +52,13 @@ function HomePage(){
             <h3>Quizzical</h3>
             <h4>Video Games Quiz</h4>
 
-            <form>
-                <label htmlFor="numberOfQuestion">Amount of Questions?</label>
+            <form >
+                <label className="custom-label" htmlFor="numberOfQuestion">Amount of Questions?</label>
                 <select 
                     id="questionNumber"
                     value={gameSetup.gameSetupInformation.questionNumbers} 
                     onChange = {(event ) => updateNumberQuestionToDispatch(event)} 
+                    className="custom-select"
                     name = "questionNumber"
                     ref={dropDownElement}>
                         <option value="0">0</option>
@@ -69,11 +71,12 @@ function HomePage(){
                         <option value="7">7</option>
                 </select>
                 <br/><br/>
-                <label htmlFor="category">Category</label>
+                <label className="custom-label" htmlFor="category">Category</label>
                 <select 
                     id="category"
                     value={gameSetup.gameSetupInformation.cateogoryNumbers} 
                     onChange = {(event ) => updateNumberCategoryToDispatch(event)} 
+                    className="custom-select"
                     name = "category">
                         <option value="0">Any Category</option>
                         <option value="9">General Knowledge</option>

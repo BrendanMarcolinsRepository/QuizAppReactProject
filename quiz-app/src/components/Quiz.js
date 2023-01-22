@@ -20,8 +20,6 @@ function Quiz(){
 
     const [correct,setCorrect] = React.useState(0)
 
-    const [clicked,setClicked] = React.useState([])
-
     const styles= (quesitonPosition, buttonPosition) => {
     
         let color = {backgroundColor :"#ffffff"};
@@ -73,9 +71,8 @@ function Quiz(){
     
     function reset(){
         setGameState(false)
-         getQuizData()
-         setClicked([])
-         setAnswer([])
+        setAnswer([])
+        getQuizData()
     }
     
 
@@ -148,10 +145,13 @@ function Quiz(){
                 
                 :
             
+                
                 <div>
-           
                     <h1>Quiz Category - {category}</h1>
-                    {element}
+                    <div className="gameOptions-container">
+                        {element}
+                    </div>
+                    
                     
                     {
                         gameState ?  
@@ -168,8 +168,9 @@ function Quiz(){
                                 </button>
                             </div>
                     }
-
                 </div>
+
+               
 
             }
             

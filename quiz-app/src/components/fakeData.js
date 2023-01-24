@@ -2,37 +2,97 @@ export default [
     {
         id : 1,
         username :  "brendan",
-        score : [
+        Catogories : [
             {
-                difficulty : "hard",
-                score : 100
+                catogorie : "General Knowledge",
+                hard : "hard",
+                hardScore : 100,
+                medium : "medium",
+                mediumScore : "200",
+                easy : "easy",
+                easyScore : "200",
+                attempts : 100,
+                incorrect : 60,
+                correct : 40,
+                score : 500
             },
             {
-                difficulty : "medium",
-                score : 200
+                catogorie : "Entertainment: Books",
+                hard : "hard",
+                hardScore : 100,
+                medium : "medium",
+                mediumScore : "200",
+                easy : "easy",
+                easyScore : "200",
+                attempts : 100,
+                incorrect : 60,
+                correct : 40,
+                score : 500
             },
             {
-                difficulty : "easy",
-                score : 300
-            },
+                catogorie : "Entertainment: Film",
+                hard : "hard",
+                hardScore : 100,
+                medium : "medium",
+                mediumScore : "200",
+                easy : "easy",
+                easyScore : "200",
+                attempts : 100,
+                incorrect : 60,
+                correct : 40,
+                score : 500
+            }
+
+        
         ]
     },
     {
         id : 2,
         username :  "phoebe",
-        score : [
+        Catogories : [
             {
-                difficulty : "hard",
-                score : 150
+                catogorie : "General Knowledge",
+                hard : "hard",
+                hardScore : 100,
+                medium : "medium",
+                mediumScore : "200",
+                easy : "easy",
+                easyScore : "200",
+                attempts : 100,
+                incorrect : 60,
+                correct : 40,
+                score : 500
             },
             {
-                difficulty : "medium",
-                score : 250
+                catogorie : "Entertainment: Books",
+                hard : "hard",
+                hardScore : 100,
+                medium : "medium",
+                mediumScore : "200",
+                easy : "easy",
+                easyScore : "200",
+                attempts : 100,
+                incorrect : 60,
+                correct : 40,
+                score : 500
             },
             {
-                difficulty : "easy",
-                score : 350
-            },
+                catogorie : "Entertainment: Film",
+                hard : "hard",
+                hardScore : 100,
+                medium : "medium",
+                mediumScore : "200",
+                easy : "easy",
+                easyScore : "200",
+                attempts : 100,
+                incorrect : 60,
+                correct : 40,
+                score : 500
+            }
+
+        
         ]
     }
 ]
+
+

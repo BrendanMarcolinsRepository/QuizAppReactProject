@@ -128,6 +128,12 @@ function HomePage(){
                     Start Quiz!
                 </button>
             </Link>
+
+            <Link to="/leaderboards">
+                <button type="button">
+                    Go to Leaderboards!
+                </button>
+            </Link>
             
         </div>
     )

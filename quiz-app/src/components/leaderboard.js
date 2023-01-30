@@ -1,34 +1,45 @@
 import React, { useState, useEffect, useRef} from "react"
 import leaderboardData from './fakeData'
+import {QuizLeaderboardHook} from "../hooks/QuizLeaderboardHook"
 function Leaderboard(){
 
 
     
-
-    const [leaderboard, setLeaderBoard] = useState(leaderboardData)
+    const {quiz_leaderboard, dispatch} = QuizLeaderboardHook()
     const [selected, setSelected] = useState("General Knowledge")
 
-    const leaderboardDataElement = leaderboard.map((data, index) => {
 
-        console.log(selected)
+    useEffect(() => {
 
-        
+        const fetchLeaderboard = async () => {
 
+            console.log("wokring here 0")
+
+            const response = await fetch("/api/quizleaderboard")
+
+            const json = await response.json()
+    
+            if(response.ok){
+                dispatch({type : "SET_QUIZ_LEADERBOARD", payload : json})
+            }
+        }
+
+        fetchLeaderboard()
+    },[dispatch])
+
+   
+    
+    const leaderboardDataElement = quiz_leaderboard && quiz_leaderboard.map((data, index) => {
+        console.log(data)
        return (
-
-            
-
         data.Catogories.map((scoreData,scoreIndex) => {
 
-                
+                console.log(data.username)
 
                 if(scoreData.catogorie === selected){
-
                    
                     return (
-                    
 
-            
                         <tr key = {scoreIndex}>
                                 <td> {data.username}</td>
                                 <td> {scoreData.hardScore}</td>
@@ -42,13 +53,8 @@ function Leaderboard(){
                     
                     )
 
-                }
-                    
-                
-                        
+                }           
             })
-
-
         )
     })
 
@@ -72,7 +78,7 @@ function Leaderboard(){
                         <option value="Entertainment: Books">Entertainment: Books</option>
                         <option value="Entertainment: Film">Entertainment: Film</option>
                     
-                </select>
+            </select>
         )
         
 

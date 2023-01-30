@@ -15,35 +15,7 @@ export default [
                 incorrect : 60,
                 correct : 40,
                 score : 500
-            },
-            {
-                catogorie : "Entertainment: Books",
-                hard : "hard",
-                hardScore : 100,
-                medium : "medium",
-                mediumScore : "200",
-                easy : "easy",
-                easyScore : "200",
-                attempts : 100,
-                incorrect : 60,
-                correct : 40,
-                score : 500
-            },
-            {
-                catogorie : "Entertainment: Film",
-                hard : "hard",
-                hardScore : 100,
-                medium : "medium",
-                mediumScore : "200",
-                easy : "easy",
-                easyScore : "200",
-                attempts : 100,
-                incorrect : 60,
-                correct : 40,
-                score : 500
             }
-
-        
         ]
     },
     {
@@ -94,5 +66,29 @@ export default [
         ]
     }
 ]
+/*
+{
+    "_id":{"$oid":"63d78e3d0fe1dd2a674294aa"},
+    "username" :  "brendan",
+      "Catogories" : [
+          {
+              "catogorie" : "General Knowledge",
+              "hard" : "hard",
+              "hardScore" : 100,
+              "medium" : "medium",
+              "mediumScore" : 200,
+              "easy" : "easy",
+              "easyScore" : 200,
+              "attempts" : 100,
+              "incorrect" : 60,
+              "correct" : 40,
+              "score" : 500
+          }
+      ]
+    
+  }
+  */
+    
+  
 
 

@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom"
 import {Provider} from "react-redux"
 import store from "./redux/index"
+import {QuizContextProvider} from "./context/QuizLeaderboardContext" 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <Router>
-        <App />
-      </Router>
+      <QuizContextProvider>
+        <Router>
+          <App />
+        </Router>
+      </QuizContextProvider>
     </Provider>
   </React.StrictMode>
 );
